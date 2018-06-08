@@ -1,0 +1,14 @@
+[package]
+name = "rust-sfrl"
+version = "0.1.0"
+authors = ["Scautura <git@scautura.co.uk>"]
+
+[dependencies]
+rand = "0.5"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json ="1.0"
+
+[dependencies.tcod]
+version = "0.12"
+features = ["serialization"]
