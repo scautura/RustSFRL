@@ -24,14 +24,12 @@ fn main() {
 
     while !root.window_closed() {
         root.set_default_foreground(player.color);
-        root.put_char(
-            player.x,
-            player.y,
-            player.char,
-            BackgroundFlag::None,
-        );
+        root.put_char(player.x, player.y, player.char, BackgroundFlag::None);
         root.flush();
-        root.wait_for_keypress(true);
+        root.put_char(player.x, player.y, ' ', BackgroundFlag::None);
+        if handle_input(&mut root, &mut player) == true {
+            break;
+        }
     }
 }
 
@@ -51,4 +49,28 @@ impl Object {
             color: color,
         }
     }
+}
+
+fn handle_input(root: &mut Root, player: &mut Object) -> bool {
+    use tcod::input::KeyCode::*;
+
+    let key = root.wait_for_keypress(true);
+    match key {
+        Key { code: Escape, .. } => return true,
+        Key { code: Up, .. } => {
+            player.y -= 1;
+        }
+        Key { code: Down, .. } => {
+            player.y += 1;
+        }
+        Key { code: Left, .. } => {
+            player.x -= 1;
+        }
+        Key { code: Right, .. } => {
+            player.x += 1;
+        }
+        _ => {}
+    }
+
+    false
 }
