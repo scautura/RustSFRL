@@ -5,22 +5,50 @@ use tcod::console::*;
 use tcod::input::{self, Event, Key, Mouse};
 use tcod::map::{FovAlgorithm, Map};
 
+const SCREEN_WIDTH: i32 = 80;
+const SCREEN_HEIGHT: i32 = 50;
+
 fn main() {
     let mut root = Root::initializer()
         .font("rsrc/lucida10x10_gs_tc.png", FontLayout::Tcod)
         .font_type(FontType::Greyscale)
-        .size(80, 50)
+        .size(SCREEN_WIDTH, SCREEN_HEIGHT)
         .title("Unnamed Sci-Fi RogueLike")
         .init();
 
+    let mut player = Object::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', colors::WHITE);
+
     tcod::system::set_fps(60);
-    
-    root.set_default_foreground(colors::WHITE);
+
     root.set_default_background(colors::BLACK);
 
     while !root.window_closed() {
-        root.print_ex(40,25,BackgroundFlag::None,TextAlignment::Center,"Hello World!");
+        root.set_default_foreground(player.color);
+        root.put_char(
+            player.x,
+            player.y,
+            player.char,
+            BackgroundFlag::None,
+        );
         root.flush();
         root.wait_for_keypress(true);
+    }
+}
+
+struct Object {
+    x: i32,
+    y: i32,
+    char: char,
+    color: Color,
+}
+
+impl Object {
+    fn new(x: i32, y: i32, char: char, color: Color) -> Self {
+        Object {
+            x: x,
+            y: y,
+            char: char,
+            color: color,
+        }
     }
 }
