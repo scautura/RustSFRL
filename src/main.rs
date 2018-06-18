@@ -49,6 +49,16 @@ impl Object {
             color: color,
         }
     }
+
+    fn move_to(self: &mut Self, x: i32, y: i32) {
+        self.x = x;
+        self.y = y;
+    }
+
+    fn move_by(self: &mut Self, dx: i32, dy: i32) {
+        self.x += dx;
+        self.y += dy;
+    }
 }
 
 fn handle_input(root: &mut Root, player: &mut Object) -> bool {
@@ -57,17 +67,29 @@ fn handle_input(root: &mut Root, player: &mut Object) -> bool {
     let key = root.wait_for_keypress(true);
     match key {
         Key { code: Escape, .. } => return true,
-        Key { code: Up, .. } => {
-            player.y -= 1;
+        Key { code: Up, .. } | Key { code: NumPad8, .. } => {
+            player.move_by(0, -1);
         }
-        Key { code: Down, .. } => {
-            player.y += 1;
+        Key { code: Down, .. } | Key { code: NumPad2, .. } => {
+            player.move_by(0, 1);
         }
-        Key { code: Left, .. } => {
-            player.x -= 1;
+        Key { code: Left, .. } | Key { code: NumPad4, .. } => {
+            player.move_by(-1, 0);
         }
-        Key { code: Right, .. } => {
-            player.x += 1;
+        Key { code: Right, .. } | Key { code: NumPad6, .. } => {
+            player.move_by(1, 0);
+        }
+        Key { code: NumPad7, .. } => {
+            player.move_by(-1, -1);
+        }
+        Key { code: NumPad9, .. } => {
+            player.move_by(1, -1);
+        }
+        Key { code: NumPad1, .. } => {
+            player.move_by(-1, 1);
+        }
+        Key { code: NumPad3, .. } => {
+            player.move_by(1, 1);
         }
         _ => {}
     }
