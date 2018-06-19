@@ -1,5 +1,9 @@
 extern crate tcod;
 
+mod entity;
+
+use entity::Object;
+
 use tcod::colors::{self, Color};
 use tcod::console::*;
 use tcod::input::{self, Event, Key, Mouse};
@@ -30,34 +34,6 @@ fn main() {
         if handle_input(&mut root, &mut player) == true {
             break;
         }
-    }
-}
-
-struct Object {
-    x: i32,
-    y: i32,
-    char: char,
-    color: Color,
-}
-
-impl Object {
-    fn new(x: i32, y: i32, char: char, color: Color) -> Self {
-        Object {
-            x: x,
-            y: y,
-            char: char,
-            color: color,
-        }
-    }
-
-    fn move_to(self: &mut Self, x: i32, y: i32) {
-        self.x = x;
-        self.y = y;
-    }
-
-    fn move_by(self: &mut Self, dx: i32, dy: i32) {
-        self.x += dx;
-        self.y += dy;
     }
 }
 
