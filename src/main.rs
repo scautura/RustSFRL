@@ -29,7 +29,7 @@ fn main() {
 
     let mut player = Object::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', colors::WHITE);
 
-    let mut map = make_map(MAP_WIDTH, MAP_HEIGHT);
+    let mut map = cartography::make_map(MAP_WIDTH, MAP_HEIGHT);
 
     tcod::system::set_fps(60);
 
@@ -94,13 +94,4 @@ fn render(player: &mut Object, map: &mut cartography::Map, root: &mut Root) {
     root.set_default_foreground(player.color);
     root.put_char(player.x, player.y, player.char, BackgroundFlag::None);
     root.flush();
-}
-
-fn make_map(width: i32, height: i32) -> cartography::Map {
-    let mut map = vec![vec![cartography::Tile::floor(); height as usize]; width as usize];
-
-    map[30][22] = cartography::Tile::wall();
-    map[50][22] = cartography::Tile::wall();
-
-    map
 }
