@@ -7,8 +7,8 @@ use entity::Object;
 
 use tcod::colors::{self, Color};
 use tcod::console::*;
-use tcod::input::{self, Event, Key, Mouse};
-use tcod::map::{FovAlgorithm, Map};
+// use tcod::input::{self, Event, Key, Mouse};
+// use tcod::map::{FovAlgorithm, Map};
 
 const SCREEN_WIDTH: i32 = 80;
 const SCREEN_HEIGHT: i32 = 50;
@@ -45,6 +45,7 @@ fn main() {
 }
 
 fn handle_input(root: &mut Root, player: &mut Object, map: &cartography::Map) -> bool {
+    use tcod::input::Key;
     use tcod::input::KeyCode::*;
 
     let key = root.wait_for_keypress(true);
@@ -83,11 +84,11 @@ fn handle_input(root: &mut Root, player: &mut Object, map: &cartography::Map) ->
 fn render(player: &mut Object, map: &mut cartography::Map, root: &mut Root) {
     for y in 0..SCREEN_HEIGHT {
         for x in 0..SCREEN_WIDTH {
-            let wall=map[x as usize][y as usize].blocks_sight;
-            if wall {
-                root.set_char_background(x, y, COLOR_DARK_WALL, BackgroundFlag::Set);
+            let wall=map[x as usize][y as usize];
+            if wall.blocks_sight {
+                root.put_char_ex(x, y, wall.char, colors::WHITE, COLOR_DARK_WALL);
             } else {
-                root.set_char_background(x, y, COLOR_DARK_GROUND, BackgroundFlag::Set);
+                root.put_char_ex(x, y, wall.char, colors::WHITE, COLOR_DARK_GROUND);
             }
         }
     }

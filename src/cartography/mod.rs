@@ -4,6 +4,7 @@ pub type Map = Vec<Vec<Tile>>;
 pub struct Tile {
     pub blocks_move: bool,
     pub blocks_sight: bool,
+    pub char: char,
 }
 
 impl Tile {
@@ -11,6 +12,7 @@ impl Tile {
         Tile {
             blocks_move: false,
             blocks_sight: false,
+            char: '.',
         }
     }
 
@@ -18,6 +20,7 @@ impl Tile {
         Tile {
             blocks_move: true,
             blocks_sight: true,
+            char: '#',
         }
     }
 }

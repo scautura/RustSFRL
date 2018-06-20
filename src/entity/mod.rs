@@ -21,10 +21,12 @@ impl Object {
         }
     }
 
-    pub fn move_to(self: &mut Self, map: &cartography::Map, x: i32, y: i32) {
-        self.x = x;
-        self.y = y;
-    }
+/*     pub fn move_to(self: &mut Self, map: &cartography::Map, x: i32, y: i32) {
+        if !map[x as usize][y as usize].blocks_move {
+            self.x = x;
+            self.y = y;
+        }
+    } */
 
     pub fn move_by(self: &mut Self, map: &cartography::Map, dx: i32, dy: i32) {
         if !map[(self.x+dx) as usize][(self.y+dy) as usize].blocks_move {
