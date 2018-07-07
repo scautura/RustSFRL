@@ -29,7 +29,7 @@ impl Object {
     } */
 
     pub fn move_by(self: &mut Self, map: &cartography::Map, dx: i32, dy: i32) {
-        if !map[(self.x+dx) as usize][(self.y+dy) as usize].blocks_move {
+        if !map.map[(self.x+dx) as usize][(self.y+dy) as usize].blocks_move {
             self.x += dx;
             self.y += dy;
         }

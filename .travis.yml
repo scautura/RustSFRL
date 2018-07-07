@@ -1,8 +1,16 @@
 language: rust
 rust:
-  - stable
+- stable
 script:
-  - cargo build --verbose --all
+- cargo build --verbose --all
 before_install:
-  - sudo apt-get install -y libgles2-mesa-dev libsdl2-dev libsdl1.2-dev
-  
+- sudo apt-get install -y libgles2-mesa-dev libsdl2-dev libsdl1.2-dev
+deploy:
+  provider: releases
+  api_key:
+    secure: Tb3FRng3jfNnI/zR30GQP+0BFz/S6JbKvRSwXVa2PJokhE1j/cfqtDgBK1wY+ZFAa/Z4RSLAZHrIT4V5uz8QScyyDQj4O/fgkk00aKDK4hZytRWQ5Onzy5ECuYHKYxTmaVWoLrAD1HC0dE8Q6PnR1sit4AN4eD5krv5mph+pH9TUUE1wnaSRjOfcgXdlq5WuCnSOLNYd7aF+LYhz8lMcOu5Xs2MhFcygVOBEMu8JaoiqNJeoir28rWMWhHndJrOguFsJqGCpv6gINIH7mLk630Dnjo+iMK7E2DZNSeEGR4L5i5Dvdv1NXRaYljkii56g6fSkLVqqijWRr2lUkoKujgpR9rcrYDnfGJ4p/KDW4PLK1q+zgmHpMDsqFOyApMnrvju0NpMNwpxdz6YTmAiFMPJqpy0m/IMHvtkLuKqGGol+TDdgmFea69RSpN8FFZBRVXaOo/4j4HUYJTlitmCk/MGR2CLbMRS+Ig6Goru7QZO+wl5C/Q2D5SzEIGfUYsPpDDsULNpHYpYOhjJv3UZoWTa/+6xtfPMXPiuCm01uMn7wlOBwSs+sMUMA/R2ApY7sRCff+R/QC7hFROYG+VfrnjyphEqyoRQlgvv1VdvkXJ4PwkLGTW4EMRv0JX3gwqP7s6sbR2j0rljHkadAkCUM569AJfHqPtTyLd2lHBmQJD4=
+  file: file.exe
+  skip_cleanup: true
+  on:
+    repo: scautura/RustSFRL
+    tags: true

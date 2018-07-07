@@ -1,7 +1,7 @@
 extern crate tcod;
 
-mod entity;
 mod cartography;
+mod entity;
 
 use entity::Object;
 
@@ -11,13 +11,14 @@ use tcod::console::*;
 // use tcod::map::{FovAlgorithm, Map};
 
 const SCREEN_WIDTH: i32 = 80;
-const SCREEN_HEIGHT: i32 = 50;
-
-const MAP_WIDTH: i32 = 256;
-const MAP_HEIGHT: i32 = 256;
+const SCREEN_HEIGHT: i32 = 60;
 
 const COLOR_DARK_WALL: Color = Color { r: 0, g: 0, b: 100 };
-const COLOR_DARK_GROUND: Color = Color { r: 50, g: 50, b: 150 };
+const COLOR_DARK_GROUND: Color = Color {
+    r: 50,
+    g: 50,
+    b: 150,
+};
 
 fn main() {
     let mut root = Root::initializer()
@@ -29,7 +30,7 @@ fn main() {
 
     let mut player = Object::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, '@', colors::WHITE);
 
-    let mut map = cartography::make_map(MAP_WIDTH, MAP_HEIGHT);
+    let mut map = cartography::Map::new();
 
     tcod::system::set_fps(60);
 
@@ -82,17 +83,15 @@ fn handle_input(root: &mut Root, player: &mut Object, map: &cartography::Map) ->
 }
 
 fn render(player: &mut Object, map: &mut cartography::Map, root: &mut Root) {
-    for y in 0..SCREEN_HEIGHT {
-        for x in 0..SCREEN_WIDTH {
-            let wall=map[x as usize][y as usize];
-            if wall.blocks_sight {
-                root.put_char_ex(x, y, wall.char, colors::WHITE, COLOR_DARK_WALL);
-            } else {
-                root.put_char_ex(x, y, wall.char, colors::WHITE, COLOR_DARK_GROUND);
-            }
-        }
-    }
-    root.set_default_foreground(player.color);
-    root.put_char(player.x, player.y, player.char, BackgroundFlag::None);
+    blit(
+        &mut map.render(player),
+        (0, 0),
+        (50, 50),
+        root,
+        (0, 0),
+        1.0,
+        1.0,
+    );
+
     root.flush();
 }
